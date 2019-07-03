@@ -8,7 +8,7 @@
     "commit": "node bin/git-cz",
     "build": "babel src --out-dir dist",
     "build:watch": "babel --watch src --out-dir dist",
-    "prepublish": "not-in-install && npm run build || true",
+    "prepublish": "npm run snyk-protect; not-in-install && npm run build || true",
     "report-coverage": "nyc report --reporter=lcov | codecov",
     "write-coverage": "nyc report --reporter=lcov",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -16,7 +16,8 @@
     "lint": "eslint --ignore-path .gitignore .",
     "test": "nyc --require babel-core/register _mocha -- test/tests/index.js",
     "test:watch": "nodemon -q --ignore test/.tmp/ --ignore test/artifacts/ --ignore coverage/ --exec \"npm run test\" --",
-    "test:windows": "node ./test/tools/trigger-appveyor-tests.js"
+    "test:windows": "node ./test/tools/trigger-appveyor-tests.js",
+    "snyk-protect": "snyk protect"
   },
   "config": {
     "commitizen": {
@@ -86,7 +87,8 @@
     "minimist": "1.2.0",
     "path-exists": "2.1.0",
     "shelljs": "0.7.6",
-    "strip-json-comments": "2.0.1"
+    "strip-json-comments": "2.0.1",
+    "snyk": "^1.189.0"
   },
   "babel": {
     "presets": [
@@ -103,5 +105,6 @@
   "engineStrict": true,
   "engines": {
     "node": ">= 0.12"
-  }
+  },
+  "snyk": true
 }
